@@ -1,0 +1,139 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { ChallanData, ChallanItem } from "../types/challan";
+
+const INITIAL_CHALLAN_NO = 1802;
+
+/**
+ * Custom hook to manage Challan state, persistence, and logic.
+ */
+export function useChallan() {
+  const [challan, setChallan] = useState<ChallanData>({
+    id: crypto.randomUUID(),
+    challanNo: INITIAL_CHALLAN_NO,
+    date: new Date().toISOString().split("T")[0],
+    name: "",
+    address: "",
+    buyer: "",
+    attn: "",
+    bookingNo: "",
+    poOrderNo: "",
+    items: [
+      { id: crypto.randomUUID(), slNo: 1, description: "", orderQty: "", deliveryQty: "", remark: "" }
+    ],
+    createdAt: new Date().toISOString(),
+  });
+
+  const [history, setHistory] = useState<ChallanData[]>([]);
+
+  // Load last challan number and history from localStorage
+  useEffect(() => {
+    const savedHistory = localStorage.getItem("challan_history");
+    const lastNo = localStorage.getItem("last_challan_no");
+
+    if (savedHistory) {
+      try {
+        setHistory(JSON.parse(savedHistory));
+      } catch (e) {
+        console.error("Failed to parse history", e);
+      }
+    }
+
+    if (lastNo) {
+      setChallan(prev => ({ ...prev, challanNo: parseInt(lastNo) + 1 }));
+    }
+  }, []);
+
+  const updateField = (field: keyof ChallanData, value: string | number) => {
+    setChallan(prev => ({ ...prev, [field]: value }));
+  };
+
+  const addItem = () => {
+    setChallan(prev => ({
+      ...prev,
+      items: [
+        ...prev.items,
+        {
+          id: crypto.randomUUID(),
+          slNo: prev.items.length + 1,
+          description: "",
+          orderQty: "",
+          deliveryQty: "",
+          remark: ""
+        }
+      ]
+    }));
+  };
+
+  const removeItem = (id: string) => {
+    setChallan(prev => {
+      const filteredItems = prev.items.filter(item => item.id !== id);
+      // Re-index Sl. No
+      const reindexedItems = filteredItems.map((item, index) => ({
+        ...item,
+        slNo: index + 1
+      }));
+      return { ...prev, items: reindexedItems };
+    });
+  };
+
+  const updateItem = (id: string, field: keyof ChallanItem, value: string | number) => {
+    setChallan(prev => ({
+      ...prev,
+      items: prev.items.map(item =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
+  const calculateTotal = useCallback(() => {
+    return challan.items.reduce((sum, item) => {
+      const qty = parseFloat(String(item.deliveryQty)) || 0;
+      return sum + qty;
+    }, 0);
+  }, [challan.items]);
+
+  const saveChallan = () => {
+    const newHistory = [challan, ...history];
+    setHistory(newHistory);
+    localStorage.setItem("challan_history", JSON.stringify(newHistory));
+    localStorage.setItem("last_challan_no", String(challan.challanNo));
+    
+    // Prepare for next challan
+    setChallan({
+      id: crypto.randomUUID(),
+      challanNo: challan.challanNo + 1,
+      date: new Date().toISOString().split("T")[0],
+      name: "",
+      address: "",
+      buyer: "",
+      attn: "",
+      bookingNo: "",
+      poOrderNo: "",
+      items: [
+        { id: crypto.randomUUID(), slNo: 1, description: "", orderQty: "", deliveryQty: "", remark: "" }
+      ],
+      createdAt: new Date().toISOString(),
+    });
+  };
+
+  const loadFromHistory = (data: ChallanData) => {
+    setChallan({
+      ...data,
+      id: crypto.randomUUID(), // New ID for a new instance based on history
+    });
+  };
+
+  return {
+    challan,
+    history,
+    updateField,
+    addItem,
+    removeItem,
+    updateItem,
+    calculateTotal,
+    saveChallan,
+    loadFromHistory
+  };
+}
