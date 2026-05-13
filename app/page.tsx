@@ -18,7 +18,9 @@ export default function ChallanDashboard() {
     calculateTotal,
     saveChallan,
     loadFromHistory,
-    resetForm
+    resetForm,
+    exportHistory,
+    importHistory
   } = useChallan();
 
   const handlePrint = () => {
@@ -88,6 +90,14 @@ export default function ChallanDashboard() {
             <HistoryList
               history={history}
               onLoad={loadFromHistory}
+              onExport={exportHistory}
+              onImport={(data) => {
+                if (importHistory(data)) {
+                  alert("History imported successfully!");
+                } else {
+                  alert("Failed to import history. Please check the file format.");
+                }
+              }}
             />
           </aside>
         </div>

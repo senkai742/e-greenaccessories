@@ -146,6 +146,39 @@ export function useChallan() {
     });
   };
 
+  const exportHistory = () => {
+    const dataStr = JSON.stringify(history, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `challan_history_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  };
+
+  const importHistory = (jsonData: string) => {
+    try {
+      const importedData = JSON.parse(jsonData);
+      if (Array.isArray(importedData)) {
+        // Merge with existing history or replace? User likely wants to merge/append
+        // For simplicity and safety, let's merge unique IDs
+        const existingIds = new Set(history.map(item => item.id));
+        const newItems = importedData.filter(item => !existingIds.has(item.id));
+        
+        const updatedHistory = [...newItems, ...history];
+        setHistory(updatedHistory);
+        localStorage.setItem("challan_history", JSON.stringify(updatedHistory));
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.error("Failed to import history:", e);
+      return false;
+    }
+  };
+
   return {
     challan,
     history,
@@ -156,6 +189,8 @@ export function useChallan() {
     calculateTotal,
     saveChallan,
     loadFromHistory,
-    resetForm
+    resetForm,
+    exportHistory,
+    importHistory
   };
 }

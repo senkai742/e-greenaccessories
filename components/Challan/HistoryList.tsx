@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X, Search, FileText, ChevronRight, History as HistoryIcon } from "lucide-react";
+import { X, Search, FileText, ChevronRight, History as HistoryIcon, Download, Upload } from "lucide-react";
 import { ChallanData } from "../../types/challan";
 
 interface HistoryListProps {
@@ -11,8 +11,31 @@ interface HistoryListProps {
   isOpen: boolean;
 }
 
-export function HistoryList({ history, onLoad }: { history: ChallanData[], onLoad: (data: ChallanData) => void }) {
+export function HistoryList({ 
+  history, 
+  onLoad, 
+  onExport, 
+  onImport 
+}: { 
+  history: ChallanData[], 
+  onLoad: (data: ChallanData) => void,
+  onExport: () => void,
+  onImport: (data: string) => void
+}) {
   const [search, setSearch] = React.useState("");
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const content = event.target?.result as string;
+        onImport(content);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   const filteredHistory = history.filter(item => 
     item.challanNo.toString().includes(search) || 
@@ -76,6 +99,29 @@ export function HistoryList({ history, onLoad }: { history: ChallanData[], onLoa
             </button>
           ))
         )}
+      </div>
+      <div className="p-3 bg-slate-50 border-t flex gap-2 no-print">
+        <button
+          onClick={onExport}
+          className="flex-1 flex items-center justify-center gap-2 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-100 transition-all text-[11px] font-bold"
+        >
+          <Download size={14} />
+          Export
+        </button>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="flex-1 flex items-center justify-center gap-2 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-100 transition-all text-[11px] font-bold"
+        >
+          <Upload size={14} />
+          Import
+        </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept=".json"
+          className="hidden"
+        />
       </div>
     </div>
   );
