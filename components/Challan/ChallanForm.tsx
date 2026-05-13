@@ -39,17 +39,8 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
         {/* Header Section */}
         <div className="flex justify-between items-start mb-2 border-b-2 border-black pb-2">
           <div className="flex gap-4 items-center">
-            {/* Simulated Logo from Image */}
-            <div className="flex flex-col items-center leading-none">
-              <div className="bg-emerald-700 text-white px-2 py-1 font-bold text-xl flex items-center gap-1">
-                <span className="text-2xl">E</span>
-                <span className="h-4 w-4 bg-white block"></span>
-                <span>GREEN</span>
-              </div>
-              <div className="text-[8px] font-sans font-semibold tracking-tighter text-gray-600 mt-1">
-                Your Trusted Partner
-              </div>
-            </div>
+            {/* E-GREEN Branding Logo Image */}
+            <img src="/logo.png" alt="E-GREEN Logo" className="h-16 w-auto" />
             <div className="border-l-2 border-black pl-4">
               <h1 className="text-4xl font-bold tracking-tight text-black italic leading-tight">E-Green Accessories</h1>
               <p className="text-sm font-semibold italic">(One Stop Services For Garments Accessories)</p>
@@ -75,7 +66,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
         </div>
 
         {/* Metadata Grid */}
-        <div className="grid grid-cols-[1fr_auto] gap-x-12 gap-y-3 mb-6 px-2">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-x-12 gap-y-3 mb-6 px-2">
           <div className="space-y-3">
             <div className="flex items-baseline gap-1">
               <span className="font-bold whitespace-nowrap">Name:</span>
@@ -104,29 +95,33 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
                 {/* Second line of address if needed */}
               </div>
             </div>
-            <div className="flex items-baseline gap-1">
-              <span className="font-bold whitespace-nowrap">Attn:</span>
-              <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
-                <input
-                  type="text"
-                  value={data.attn}
-                  onChange={(e) => updateField("attn", e.target.value)}
-                  className="w-full bg-transparent outline-none px-1"
-                />
+            <div className="flex flex-wrap items-baseline gap-4">
+              <div className="flex-1 flex items-baseline gap-1 min-w-[200px]">
+                <span className="font-bold whitespace-nowrap">Attn:</span>
+                <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
+                  <input
+                    type="text"
+                    value={data.attn}
+                    onChange={(e) => updateField("attn", e.target.value)}
+                    className="w-full bg-transparent outline-none px-1"
+                  />
+                </div>
               </div>
-              <span className="font-bold whitespace-nowrap ml-4">Booking No:</span>
-              <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
-                <input
-                  type="text"
-                  value={data.bookingNo}
-                  onChange={(e) => updateField("bookingNo", e.target.value)}
-                  className="w-full bg-transparent outline-none px-1"
-                />
+              <div className="flex-1 flex items-baseline gap-1 min-w-[200px]">
+                <span className="font-bold whitespace-nowrap">Booking No:</span>
+                <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
+                  <input
+                    type="text"
+                    value={data.bookingNo}
+                    onChange={(e) => updateField("bookingNo", e.target.value)}
+                    className="w-full bg-transparent outline-none px-1"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3 w-64">
+          <div className="space-y-3 w-full md:w-64">
             <div className="flex items-baseline gap-1">
               <span className="font-bold whitespace-nowrap">Date:</span>
               <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
@@ -149,7 +144,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
                 />
               </div>
             </div>
-            <div className="flex items-baseline gap-1 pt-6">
+            <div className="flex items-baseline gap-1 pt-0 md:pt-6">
               <span className="font-bold whitespace-nowrap">Po/Order No:</span>
               <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
                 <input
