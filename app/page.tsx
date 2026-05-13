@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Plus } from "lucide-react";
 import { useChallan } from "../hooks/useChallan";
 import { ChallanForm } from "../components/Challan/ChallanForm";
 import { ChallanTable } from "../components/Challan/ChallanTable";
@@ -17,12 +17,12 @@ export default function ChallanDashboard() {
     updateItem,
     calculateTotal,
     saveChallan,
-    loadFromHistory
+    loadFromHistory,
+    resetForm
   } = useChallan();
 
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-
   const handlePrint = () => {
+    saveChallan();
     window.print();
   };
 
@@ -31,55 +31,66 @@ export default function ChallanDashboard() {
     alert("Challan saved to history!");
   };
 
+  const handleNew = () => {
+    if (confirm("Are you sure you want to start a new challan? Any unsaved changes will be lost.")) {
+      resetForm();
+    }
+  };
+
   return (
     <main className="min-h-screen bg-slate-200 py-12 px-4 sm:px-6 lg:px-8 print:p-0 print:bg-white">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-12 no-print flex justify-between items-center bg-white/50 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl">
-          <div>
+      <div className="max-w-[1400px] mx-auto">
+        <header className="mb-8 no-print flex justify-between items-center bg-white/50 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl">
+          <div className="flex items-center gap-6">
             <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-              <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white text-xl">EG</div>
+              <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg shadow-emerald-200">EG</div>
               Digital Challan
             </h1>
-            <p className="mt-1 text-slate-500 font-medium">
-              E-Green Accessories Management System
-            </p>
+            <button
+              onClick={handleNew}
+              className="flex items-center gap-2 px-4 py-2 bg-white text-emerald-600 border border-emerald-200 rounded-xl font-bold hover:bg-emerald-50 transition-all shadow-sm active:scale-95"
+            >
+              <Plus size={18} />
+              New Challan
+            </button>
           </div>
           <div className="flex flex-col items-end">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Next Serial</span>
-            <div className="bg-emerald-600 text-white px-4 py-1 rounded-full text-lg font-bold shadow-lg shadow-emerald-200">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 text-[10px]">Next Serial</span>
+            <div className="bg-emerald-600 text-white px-6 py-1 rounded-full text-2xl font-black shadow-lg shadow-emerald-200">
               #{challan.challanNo}
             </div>
           </div>
         </header>
 
-        <section className="relative">
-          <ChallanForm
-            data={challan}
-            updateField={updateField}
-            onPrint={handlePrint}
-            onSave={handleSave}
-            onToggleHistory={() => setIsHistoryOpen(true)}
-          >
-            <ChallanTable
-              items={challan.items}
-              onUpdateItem={updateItem}
-              onAddItem={addItem}
-              onRemoveItem={removeItem}
-              total={calculateTotal()}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
+          <section className="relative">
+            <ChallanForm
+              data={challan}
+              updateField={updateField}
+              onPrint={handlePrint}
+              onSave={handleSave}
+            >
+              <ChallanTable
+                items={challan.items}
+                onUpdateItem={updateItem}
+                onAddItem={addItem}
+                onRemoveItem={removeItem}
+                total={calculateTotal()}
+              />
+              <ChallanFooter />
+            </ChallanForm>
+          </section>
+
+          <aside className="sticky top-12">
+            <HistoryList
+              history={history}
+              onLoad={loadFromHistory}
             />
-            <ChallanFooter />
-          </ChallanForm>
-        </section>
+          </aside>
+        </div>
 
-        <HistoryList
-          history={history}
-          onLoad={loadFromHistory}
-          onClose={() => setIsHistoryOpen(false)}
-          isOpen={isHistoryOpen}
-        />
-
-        <footer className="mt-12 text-center text-gray-400 text-sm no-print pb-8">
-          &copy; {new Date().getFullYear()} E-Green Accessories. Digital Challan System v1.0
+        <footer className="mt-12 text-center text-slate-400 text-xs no-print pb-8 font-bold uppercase tracking-widest opacity-50">
+          &copy; {new Date().getFullYear()} E-Green Accessories &bull; Internal Management Portal
         </footer>
       </div>
     </main>

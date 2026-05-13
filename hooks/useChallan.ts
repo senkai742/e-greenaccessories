@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChallanData, ChallanItem } from "../types/challan";
 
-const INITIAL_CHALLAN_NO = 1802;
+const INITIAL_CHALLAN_NO = 1;
 
 /**
  * Custom hook to manage Challan state, persistence, and logic.
@@ -125,6 +125,27 @@ export function useChallan() {
     });
   };
 
+  const resetForm = () => {
+    const lastNo = localStorage.getItem("last_challan_no");
+    const nextNo = lastNo ? parseInt(lastNo) + 1 : INITIAL_CHALLAN_NO;
+    
+    setChallan({
+      id: crypto.randomUUID(),
+      challanNo: nextNo,
+      date: new Date().toISOString().split("T")[0],
+      name: "",
+      address: "",
+      buyer: "",
+      attn: "",
+      bookingNo: "",
+      poOrderNo: "",
+      items: [
+        { id: crypto.randomUUID(), slNo: 1, description: "", orderQty: "", deliveryQty: "", remark: "" }
+      ],
+      createdAt: new Date().toISOString(),
+    });
+  };
+
   return {
     challan,
     history,
@@ -134,6 +155,7 @@ export function useChallan() {
     updateItem,
     calculateTotal,
     saveChallan,
-    loadFromHistory
+    loadFromHistory,
+    resetForm
   };
 }

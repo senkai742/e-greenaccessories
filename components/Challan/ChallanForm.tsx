@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Mail, Phone, MapPin, Printer, Save, History as HistoryIcon } from "lucide-react";
+import { Mail, Phone, MapPin, Printer, Save } from "lucide-react";
 import { ChallanData } from "../../types/challan";
 
 interface ChallanFormProps {
@@ -9,11 +9,10 @@ interface ChallanFormProps {
   updateField: (field: keyof ChallanData, value: string | number) => void;
   onPrint: () => void;
   onSave: () => void;
-  onToggleHistory: () => void;
   children?: React.ReactNode;
 }
 
-export function ChallanForm({ data, updateField, onPrint, onSave, onToggleHistory, children }: ChallanFormProps) {
+export function ChallanForm({ data, updateField, onPrint, onSave, children }: ChallanFormProps) {
   return (
     <div className="space-y-6">
       {/* Action Buttons - Hidden on print */}
@@ -34,13 +33,6 @@ export function ChallanForm({ data, updateField, onPrint, onSave, onToggleHistor
             Save to History
           </button>
         </div>
-        <button
-          onClick={onToggleHistory}
-          className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all"
-        >
-          <HistoryIcon size={18} />
-          View History
-        </button>
       </div>
 
       <div className="challan-container font-serif">
