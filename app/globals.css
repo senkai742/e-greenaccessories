@@ -35,7 +35,7 @@ body {
   html, body {
     background: white !important;
     color: black !important;
-    font-family: var(--font-serif) !important;
+    font-family: var(--font-sans) !important;
     margin: 0 !important;
     padding: 0 !important;
     -webkit-print-color-adjust: exact !important;
@@ -60,8 +60,8 @@ body {
   }
 
   .copy-1 { background-color: white !important; }
-  .copy-2 { background-color: #fdf2f8 !important; } /* Very Light Pink */
-  .copy-3 { background-color: #fcfce0 !important; } /* Very Light Yellow/Green */
+  .copy-2 { background-color: #fcfce0 !important; } /* Very Light Yellow/Green */
+  .copy-3 { background-color: #fdf2f8 !important; } /* Very Light Pink */
 
   .no-print {
     display: none !important;

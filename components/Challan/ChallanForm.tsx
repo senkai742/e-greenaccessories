@@ -35,7 +35,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
         </div>
       </div>
 
-      <div className="challan-container font-serif relative">
+      <div className="challan-container font-sans relative">
         {/* Watermark Logo */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 z-0">
           <img src="/logo.png" alt="Watermark" className="w-[80%] max-w-[600px] object-contain" />
@@ -47,8 +47,8 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
             {/* E-GREEN Branding Logo Image */}
             <img src="/logo.png" alt="E-GREEN Logo" className="h-16 w-auto" />
             <div className="border-l-2 border-black pl-4">
-              <h1 className="text-4xl font-bold tracking-tight text-black italic leading-tight">E-Green Accessories</h1>
-              <p className="text-sm font-semibold italic">(One Stop Services For Garments Accessories)</p>
+              <h1 className="text-4xl font-bold tracking-tight text-black leading-tight">E-Green Accessories</h1>
+              <p className="text-sm font-semibold">(One Stop Services For Garments Accessories)</p>
             </div>
           </div>
         </div>
