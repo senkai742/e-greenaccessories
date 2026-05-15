@@ -38,7 +38,30 @@ body {
     font-family: var(--font-serif) !important;
     margin: 0 !important;
     padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
+
+  .copy-1, .copy-2, .copy-3 {
+    break-after: page !important;
+    page-break-after: always !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  .copy-3 {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .break-before-page {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  .copy-1 { background-color: white !important; }
+  .copy-2 { background-color: #fdf2f8 !important; } /* Very Light Pink */
+  .copy-3 { background-color: #fcfce0 !important; } /* Very Light Yellow/Green */
 
   .no-print {
     display: none !important;
@@ -61,6 +84,7 @@ body {
   }
 
   .challan-container {
+    background-color: transparent !important; /* Let wrapper color show through */
     box-shadow: none !important;
     padding: 10mm !important;
     margin: 0 !important;

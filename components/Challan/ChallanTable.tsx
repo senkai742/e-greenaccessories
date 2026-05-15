@@ -11,9 +11,10 @@ interface ChallanTableProps {
   onRemoveItem: (id: string) => void;
   total: number;
   suggestions?: string[];
+  isLastPage?: boolean;
 }
 
-export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total, suggestions = [] }: ChallanTableProps) {
+export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total, suggestions = [], isLastPage = true }: ChallanTableProps) {
   return (
     <div className="w-full">
       <datalist id="description-suggestions">
@@ -23,7 +24,7 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
       </datalist>
       <table className="w-full border-collapse border-[1.5px] border-black text-sm">
         <thead>
-          <tr className="bg-white">
+          <tr className="bg-transparent">
             <th className="border border-black px-1 py-1 w-[40px] text-[10px]">Sl. No</th>
             <th className="border border-black px-2 py-1 text-center font-bold text-lg">Description</th>
             <th className="border border-black px-1 py-1 w-[100px] text-xs">Order Qty</th>
@@ -81,24 +82,28 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
               </td>
             </tr>
           ))}
-          <tr className="h-8">
-            <td colSpan={3} className="border border-black px-4 py-1 text-right font-bold text-lg">Total:</td>
-            <td className="border border-black px-1 py-1 text-center font-bold text-lg">{total}</td>
-            <td className="border border-black"></td>
-            <td className="border border-black no-print"></td>
-          </tr>
+          {isLastPage && (
+            <tr className="h-8">
+              <td colSpan={3} className="border border-black px-4 py-1 text-right font-bold text-lg">Total:</td>
+              <td className="border border-black px-1 py-1 text-center font-bold text-lg">{total}</td>
+              <td className="border border-black"></td>
+              <td className="border border-black no-print"></td>
+            </tr>
+          )}
         </tbody>
       </table>
       
-      <div className="mt-4 no-print flex justify-start">
-        <button
-          onClick={onAddItem}
-          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-sm active:scale-95"
-        >
-          <Plus size={18} />
-          Add Row
-        </button>
-      </div>
+      {isLastPage && (
+        <div className="mt-4 no-print flex justify-start">
+          <button
+            onClick={onAddItem}
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-sm active:scale-95"
+          >
+            <Plus size={18} />
+            Add Row
+          </button>
+        </div>
+      )}
     </div>
   );
 }
