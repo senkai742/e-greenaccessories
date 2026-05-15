@@ -10,16 +10,17 @@ interface ChallanTableProps {
   onAddItem: () => void;
   onRemoveItem: (id: string) => void;
   total: number;
+  suggestions?: string[];
 }
 
-export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total }: ChallanTableProps) {
-  // Fill the table with empty rows to match the physical paper look (approx 15 rows total)
-  const MIN_ROWS = 15;
-  const emptyRowsCount = Math.max(0, MIN_ROWS - items.length);
-  const emptyRows = Array.from({ length: emptyRowsCount });
-
+export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total, suggestions = [] }: ChallanTableProps) {
   return (
     <div className="w-full">
+      <datalist id="description-suggestions">
+        {suggestions.map((suggestion, idx) => (
+          <option key={idx} value={suggestion} />
+        ))}
+      </datalist>
       <table className="w-full border-collapse border-[1.5px] border-black text-sm">
         <thead>
           <tr className="bg-white">
@@ -39,6 +40,7 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
                 <input
                   type="text"
                   value={item.description}
+                  list="description-suggestions"
                   onChange={(e) => onUpdateItem(item.id, "description", e.target.value)}
                   className="w-full px-2 py-1 bg-transparent outline-none h-full"
                 />
@@ -77,17 +79,6 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
                   <Trash2 size={14} />
                 </button>
               </td>
-            </tr>
-          ))}
-          {/* Fill empty rows to maintain height */}
-          {emptyRows.map((_, idx) => (
-            <tr key={`empty-${idx}`} className="h-8">
-              <td className="border border-black"></td>
-              <td className="border border-black"></td>
-              <td className="border border-black"></td>
-              <td className="border border-black"></td>
-              <td className="border border-black"></td>
-              <td className="border border-black no-print"></td>
             </tr>
           ))}
           <tr className="h-8">

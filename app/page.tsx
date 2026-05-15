@@ -39,6 +39,12 @@ export default function ChallanDashboard() {
     }
   };
 
+  // Extract unique item descriptions from history for suggestions
+  const itemSuggestions = Array.from(new Set(
+    history.flatMap(c => c.items.map(i => i.description))
+      .filter(d => d && d.trim().length > 0)
+  ));
+
   return (
     <main className="min-h-screen bg-slate-200 py-12 px-4 sm:px-6 lg:px-8 print:p-0 print:bg-white">
       <div className="max-w-[1400px] mx-auto">
@@ -65,9 +71,9 @@ export default function ChallanDashboard() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
-          <section className="relative overflow-x-auto pb-4">
-            <div className="min-w-[800px] md:min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start print:block print:gap-0">
+          <section className="relative overflow-x-auto pb-4 print:pb-0 print:overflow-visible">
+            <div className="min-w-[800px] md:min-w-0 print:min-w-0">
               <ChallanForm
                 data={challan}
                 updateField={updateField}
@@ -80,6 +86,7 @@ export default function ChallanDashboard() {
                   onAddItem={addItem}
                   onRemoveItem={removeItem}
                   total={calculateTotal()}
+                  suggestions={itemSuggestions}
                 />
                 <ChallanFooter />
               </ChallanForm>

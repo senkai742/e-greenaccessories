@@ -28,14 +28,16 @@ body {
 
 @media print {
   @page {
-    margin: 1cm;
+    margin: 0; /* Remove browser default margins */
     size: A4;
   }
 
-  body {
+  html, body {
     background: white !important;
     color: black !important;
     font-family: var(--font-serif) !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .no-print {
@@ -53,28 +55,35 @@ body {
     color: black !important;
   }
 
-  /* Force borders to be black and visible */
   table, th, td {
     border: 1px solid black !important;
     border-collapse: collapse !important;
   }
+
+  .challan-container {
+    box-shadow: none !important;
+    padding: 10mm !important;
+    margin: 0 !important;
+    width: 210mm !important;
+    height: 296.5mm !important; /* Extremely close to 297mm to prevent 2nd page spill */
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
 }
 
 .challan-container {
-  max-width: 800px;
+  width: 210mm;
+  min-height: 297mm;
+  max-width: 100%;
   margin: 0 auto;
   background: white;
   color: black;
-  padding: 2rem;
+  padding: 10mm;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-
-@media print {
-  .challan-container {
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    max-width: none;
-  }
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }

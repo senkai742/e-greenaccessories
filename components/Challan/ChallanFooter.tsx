@@ -4,7 +4,7 @@ import React from "react";
 
 export function ChallanFooter() {
   return (
-    <div className="mt-8 space-y-8">
+    <div className="mt-auto pt-8 space-y-8">
       <p className="text-center text-sm font-bold italic">
         Disclaimer. It is requested to give inventory report within two days after delivery.
       </p>
