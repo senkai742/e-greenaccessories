@@ -45,8 +45,8 @@ export default function ChallanDashboard() {
       .filter(d => d && d.trim().length > 0)
   ));
 
-  // Pagination logic: Chunk items into groups of 14
-  const ITEMS_PER_PAGE = 14;
+  // Pagination logic: Chunk items into groups of 20
+  const ITEMS_PER_PAGE = 20;
   const chunkedItems: typeof challan.items[] = [];
   for (let i = 0; i < challan.items.length; i += ITEMS_PER_PAGE) {
     chunkedItems.push(challan.items.slice(i, i + ITEMS_PER_PAGE));

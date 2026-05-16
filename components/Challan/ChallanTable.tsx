@@ -23,31 +23,31 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
           <option key={idx} value={suggestion} />
         ))}
       </datalist>
-      <table className="w-full border-collapse border-[1.5px] border-black text-sm">
+      <table className="w-full border-collapse border-[1.5px] border-black text-xs">
         <thead>
           <tr className="bg-transparent">
-            <th className="border border-black px-1 py-1 w-[40px] text-[10px]">Sl. No</th>
-            <th className="border border-black px-2 py-1 text-center font-bold text-lg">Description</th>
-            <th className="border border-black px-1 py-1 w-[100px] text-xs">Order Qty</th>
-            <th className="border border-black px-1 py-1 w-[110px] text-xs">Delivery Qty</th>
-            <th className="border border-black px-1 py-1 w-[80px] text-xs">Remark</th>
-            <th className="border border-black px-1 py-1 w-[60px] no-print">Action</th>
+            <th className="border border-black px-1 py-0.5 w-[40px] text-[9px]">Sl. No</th>
+            <th className="border border-black px-2 py-0.5 text-center font-bold text-sm">Description</th>
+            <th className="border border-black px-1 py-0.5 w-[100px] text-[10px]">Order Qty</th>
+            <th className="border border-black px-1 py-0.5 w-[110px] text-[10px]">Delivery Qty</th>
+            <th className="border border-black px-1 py-0.5 w-[80px] text-[10px]">Remark</th>
+            <th className="border border-black px-1 py-0.5 w-[60px] no-print">Action</th>
           </tr>
         </thead>
         <tbody>
           {items.map((item) => (
-            <tr key={item.id} className="h-8">
+            <tr key={item.id} className="h-[23px]">
               <td className="border border-black px-1 py-1 text-center font-bold">{item.slNo}</td>
               <td className="border border-black px-0 py-0 relative">
                 {isReadOnly ? (
-                  <div className="w-full px-2 py-1 h-full">{item.description}</div>
+                  <div className="w-full px-2 py-0 h-full leading-[23px]">{item.description}</div>
                 ) : (
                   <input
                     type="text"
                     value={item.description}
                     list="description-suggestions"
                     onChange={(e) => onUpdateItem(item.id, "description", e.target.value)}
-                    className="w-full px-2 py-1 bg-transparent outline-none h-full"
+                    className="w-full px-2 py-0 bg-transparent outline-none h-full"
                   />
                 )}
                 {/* Vertical line separator inside Description if needed to match image exactly */}
@@ -55,37 +55,37 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
               </td>
               <td className="border border-black px-0 py-0">
                 {isReadOnly ? (
-                  <div className="w-full px-1 py-1 text-center">{item.orderQty}</div>
+                  <div className="w-full px-1 py-0 text-center">{item.orderQty}</div>
                 ) : (
                   <input
                     type="text"
                     value={item.orderQty}
                     onChange={(e) => onUpdateItem(item.id, "orderQty", e.target.value)}
-                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                    className="w-full px-1 py-0 text-center bg-transparent outline-none"
                   />
                 )}
               </td>
               <td className="border border-black px-0 py-0">
                 {isReadOnly ? (
-                  <div className="w-full px-1 py-1 text-center">{item.deliveryQty}</div>
+                  <div className="w-full px-1 py-0 text-center">{item.deliveryQty}</div>
                 ) : (
                   <input
                     type="number"
                     value={item.deliveryQty}
                     onChange={(e) => onUpdateItem(item.id, "deliveryQty", e.target.value)}
-                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                    className="w-full px-1 py-0 text-center bg-transparent outline-none"
                   />
                 )}
               </td>
               <td className="border border-black px-0 py-0">
                 {isReadOnly ? (
-                  <div className="w-full px-1 py-1 text-center">{item.remark}</div>
+                  <div className="w-full px-1 py-0 text-center">{item.remark}</div>
                 ) : (
                   <input
                     type="text"
                     value={item.remark}
                     onChange={(e) => onUpdateItem(item.id, "remark", e.target.value)}
-                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                    className="w-full px-1 py-0 text-center bg-transparent outline-none"
                   />
                 )}
               </td>
@@ -102,9 +102,9 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
             </tr>
           ))}
           {isLastPage && (
-            <tr className="h-8">
-              <td colSpan={3} className="border border-black px-4 py-1 text-right font-bold text-lg">Total:</td>
-              <td className="border border-black px-1 py-1 text-center font-bold text-lg">{total}</td>
+            <tr className="h-6">
+              <td colSpan={3} className="border border-black px-4 py-0.5 text-right font-bold text-sm">Total:</td>
+              <td className="border border-black px-1 py-0.5 text-center font-bold text-sm">{total}</td>
               <td className="border border-black"></td>
               <td className="border border-black no-print"></td>
             </tr>

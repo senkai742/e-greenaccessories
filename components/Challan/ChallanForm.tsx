@@ -56,7 +56,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
 
         {/* Address & Contact Info */}
         <div className="text-center text-xs font-bold space-y-0.5 border-b border-black pb-1 mb-4">
-          <p>Address: 291, Inner circular road, Motijheel, Lift-7. Dhaka-1000</p>
+          <p>Address: 291,Jomidar Palace, Fokirapool,Motijheel,Dhaka-1000</p>
           <p>Phone: 01810-424400, E-mail: egreenaccessoriesbd@gmail.com</p>
         </div>
 
