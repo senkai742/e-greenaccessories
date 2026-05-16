@@ -82,7 +82,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
 
         <div className="flex-1 flex flex-col">
           {/* Metadata Grid */}
-          <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-12 gap-y-3 mb-6 px-2 text-xs sm:text-sm">
+          <div className="grid grid-cols-[1fr_auto] gap-x-12 gap-y-3 mb-6 px-2 text-sm">
             <div className="space-y-3">
               <div className="flex items-baseline gap-1">
                 <span className="font-bold whitespace-nowrap">Name:</span>
@@ -94,7 +94,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
               </div>
               <div className="flex items-start gap-1 relative">
                 <span className="font-bold whitespace-nowrap leading-[22px]">Address:</span>
-                <div className="flex-1 relative min-h-[44px]">
+                <div className="flex-1 relative min-h-[44px] min-w-0">
                   {/* Background dotted lines */}
                   <div className="absolute inset-0 flex flex-col pointer-events-none">
                     <div className="border-b border-dotted border-black h-[22px]"></div>
@@ -116,8 +116,8 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row flex-wrap items-baseline gap-2 sm:gap-4">
-                <div className="flex-1 flex items-baseline gap-1 w-full sm:min-w-[200px]">
+              <div className="flex flex-row flex-wrap items-baseline gap-4">
+                <div className="flex-1 flex items-baseline gap-1 min-w-[200px]">
                   <span className="font-bold whitespace-nowrap">Attn:</span>
                   <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
                     {isReadOnly ? <div className="w-full px-1">{data.attn}</div> : (
@@ -125,7 +125,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
                     )}
                   </div>
                 </div>
-                <div className="flex-1 flex items-baseline gap-1 w-full sm:min-w-[200px]">
+                <div className="flex-1 flex items-baseline gap-1 min-w-[200px]">
                   <span className="font-bold whitespace-nowrap">Booking No:</span>
                   <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
                     {isReadOnly ? <div className="w-full px-1">{data.bookingNo}</div> : (
@@ -136,7 +136,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
               </div>
             </div>
 
-            <div className="space-y-3 w-[120px] sm:w-64 print:w-64">
+            <div className="space-y-3 w-64 print:w-64">
               <div className="flex items-baseline gap-1">
                 <span className="font-bold whitespace-nowrap">Date:</span>
                 <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
