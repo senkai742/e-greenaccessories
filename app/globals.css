@@ -67,6 +67,15 @@ body {
     display: none !important;
   }
 
+  .print-hidden-screen {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -1000 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
   .print-only {
     display: block !important;
   }
@@ -84,18 +93,19 @@ body {
   }
 
   .challan-container {
-    background-color: transparent !important; /* Let wrapper color show through */
+    background-color: transparent !important;
     box-shadow: none !important;
-    padding: 8mm !important;
+    padding: 5mm !important;
     margin: 0 !important;
-    width: 210mm !important;
-    height: 296.5mm !important; /* Extremely close to 297mm to prevent 2nd page spill */
-    max-height: 100vh !important; /* Force fit on mobile print engines */
-    max-width: none !important;
+    width: 100% !important;
+    max-width: 210mm !important;
+    height: 99vh !important;
+    max-height: 99vh !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
+    page-break-inside: avoid !important;
   }
 }
 

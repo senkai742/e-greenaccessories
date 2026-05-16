@@ -120,17 +120,17 @@ export default function ChallanDashboard() {
               </div>
 
               {/* Copy 1: White (Print only) */}
-              <div className="hidden print:block">
+              <div className="print-hidden-screen">
                 {renderChallanPages("copy-1", true)}
               </div>
 
               {/* Copy 2: Pink/Purple (Print only) */}
-              <div className="hidden print:block">
+              <div className="print-hidden-screen">
                 {renderChallanPages("copy-2", true)}
               </div>
 
               {/* Copy 3: Yellow/Green (Print only) */}
-              <div className="hidden print:block">
+              <div className="print-hidden-screen">
                 {renderChallanPages("copy-3", true)}
               </div>
             </div>
