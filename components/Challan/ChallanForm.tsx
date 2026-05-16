@@ -42,7 +42,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children }: Ch
         </div>
 
         {/* Header Section */}
-        <div className="relative z-10 flex justify-between items-start mb-2 border-b-2 border-black pb-2">
+        <div className="relative z-10 flex justify-center items-center mb-2 border-b-2 border-black pb-2">
           <div className="flex gap-4 items-center">
             {/* E-GREEN Branding Logo Image */}
             <img src="/logo.png" alt="E-GREEN Logo" className="h-16 w-auto" />
