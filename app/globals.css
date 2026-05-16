@@ -67,15 +67,6 @@ body {
     display: none !important;
   }
 
-  .print-hidden-screen {
-    position: absolute !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    z-index: -1000 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-  }
-
   .print-only {
     display: block !important;
   }
@@ -95,12 +86,11 @@ body {
   .challan-container {
     background-color: transparent !important;
     box-shadow: none !important;
-    padding: 5mm !important;
+    padding: 8mm !important;
     margin: 0 !important;
-    width: 100% !important;
-    max-width: 210mm !important;
-    height: 99vh !important;
-    max-height: 99vh !important;
+    width: 210mm !important;
+    height: 296.5mm !important;
+    max-height: 296.5mm !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
