@@ -92,17 +92,28 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
                   )}
                 </div>
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="font-bold whitespace-nowrap">Address:</span>
-                <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
-                  {isReadOnly ? <div className="w-full px-1">{data.address}</div> : (
-                    <input type="text" value={data.address} onChange={(e) => updateField("address", e.target.value)} className="w-full bg-transparent outline-none px-1" />
-                  )}
-                </div>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <div className="flex-1 border-b border-dotted border-black min-h-[20px]">
-                  {/* Second line of address if needed */}
+              <div className="flex items-start gap-1 relative">
+                <span className="font-bold whitespace-nowrap leading-[22px]">Address:</span>
+                <div className="flex-1 relative min-h-[44px]">
+                  {/* Background dotted lines */}
+                  <div className="absolute inset-0 flex flex-col pointer-events-none">
+                    <div className="border-b border-dotted border-black h-[22px]"></div>
+                    <div className="border-b border-dotted border-black h-[22px]"></div>
+                  </div>
+                  {/* Content */}
+                  <div className="relative z-10 w-full h-full">
+                    {isReadOnly ? (
+                      <div className="w-full px-1 break-words whitespace-pre-wrap leading-[22px] min-h-[44px]">
+                        {data.address}
+                      </div>
+                    ) : (
+                      <textarea
+                        value={data.address}
+                        onChange={(e) => updateField("address", e.target.value)}
+                        className="w-full h-[44px] bg-transparent outline-none px-1 resize-none leading-[22px] overflow-hidden"
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row flex-wrap items-baseline gap-2 sm:gap-4">
