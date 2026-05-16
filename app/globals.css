@@ -90,6 +90,7 @@ body {
     margin: 0 !important;
     width: 210mm !important;
     height: 296.5mm !important; /* Extremely close to 297mm to prevent 2nd page spill */
+    max-height: 100vh !important; /* Force fit on mobile print engines */
     max-width: none !important;
     display: flex !important;
     flex-direction: column !important;

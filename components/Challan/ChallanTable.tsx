@@ -12,9 +12,10 @@ interface ChallanTableProps {
   total: number;
   suggestions?: string[];
   isLastPage?: boolean;
+  isReadOnly?: boolean;
 }
 
-export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total, suggestions = [], isLastPage = true }: ChallanTableProps) {
+export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, total, suggestions = [], isLastPage = true, isReadOnly = false }: ChallanTableProps) {
   return (
     <div className="w-full">
       <datalist id="description-suggestions">
@@ -38,47 +39,65 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
             <tr key={item.id} className="h-8">
               <td className="border border-black px-1 py-1 text-center font-bold">{item.slNo}</td>
               <td className="border border-black px-0 py-0 relative">
-                <input
-                  type="text"
-                  value={item.description}
-                  list="description-suggestions"
-                  onChange={(e) => onUpdateItem(item.id, "description", e.target.value)}
-                  className="w-full px-2 py-1 bg-transparent outline-none h-full"
-                />
+                {isReadOnly ? (
+                  <div className="w-full px-2 py-1 h-full">{item.description}</div>
+                ) : (
+                  <input
+                    type="text"
+                    value={item.description}
+                    list="description-suggestions"
+                    onChange={(e) => onUpdateItem(item.id, "description", e.target.value)}
+                    className="w-full px-2 py-1 bg-transparent outline-none h-full"
+                  />
+                )}
                 {/* Vertical line separator inside Description if needed to match image exactly */}
                 <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-black opacity-20"></div>
               </td>
               <td className="border border-black px-0 py-0">
-                <input
-                  type="text"
-                  value={item.orderQty}
-                  onChange={(e) => onUpdateItem(item.id, "orderQty", e.target.value)}
-                  className="w-full px-1 py-1 text-center bg-transparent outline-none"
-                />
+                {isReadOnly ? (
+                  <div className="w-full px-1 py-1 text-center">{item.orderQty}</div>
+                ) : (
+                  <input
+                    type="text"
+                    value={item.orderQty}
+                    onChange={(e) => onUpdateItem(item.id, "orderQty", e.target.value)}
+                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                  />
+                )}
               </td>
               <td className="border border-black px-0 py-0">
-                <input
-                  type="number"
-                  value={item.deliveryQty}
-                  onChange={(e) => onUpdateItem(item.id, "deliveryQty", e.target.value)}
-                  className="w-full px-1 py-1 text-center bg-transparent outline-none"
-                />
+                {isReadOnly ? (
+                  <div className="w-full px-1 py-1 text-center">{item.deliveryQty}</div>
+                ) : (
+                  <input
+                    type="number"
+                    value={item.deliveryQty}
+                    onChange={(e) => onUpdateItem(item.id, "deliveryQty", e.target.value)}
+                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                  />
+                )}
               </td>
               <td className="border border-black px-0 py-0">
-                <input
-                  type="text"
-                  value={item.remark}
-                  onChange={(e) => onUpdateItem(item.id, "remark", e.target.value)}
-                  className="w-full px-1 py-1 text-center bg-transparent outline-none"
-                />
+                {isReadOnly ? (
+                  <div className="w-full px-1 py-1 text-center">{item.remark}</div>
+                ) : (
+                  <input
+                    type="text"
+                    value={item.remark}
+                    onChange={(e) => onUpdateItem(item.id, "remark", e.target.value)}
+                    className="w-full px-1 py-1 text-center bg-transparent outline-none"
+                  />
+                )}
               </td>
               <td className="border border-black px-2 py-1 text-center no-print">
-                <button
-                  onClick={() => onRemoveItem(item.id)}
-                  className="text-red-500 hover:text-red-700 p-1"
-                >
-                  <Trash2 size={14} />
-                </button>
+                {!isReadOnly && (
+                  <button
+                    onClick={() => onRemoveItem(item.id)}
+                    className="text-red-500 hover:text-red-700 p-1"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
               </td>
             </tr>
           ))}

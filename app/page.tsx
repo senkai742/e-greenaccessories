@@ -53,7 +53,7 @@ export default function ChallanDashboard() {
   }
   if (chunkedItems.length === 0) chunkedItems.push([]);
 
-  const renderChallanPages = (colorClass: string) => (
+  const renderChallanPages = (colorClass: string, isReadOnly: boolean = true) => (
     <div className={colorClass}>
       {chunkedItems.map((chunk, index) => {
         const isLastPage = index === chunkedItems.length - 1;
@@ -64,6 +64,7 @@ export default function ChallanDashboard() {
               updateField={updateField}
               onPrint={handlePrint}
               onSave={handleSave}
+              isReadOnly={isReadOnly}
             >
               <ChallanTable
                 items={chunk}
@@ -73,6 +74,7 @@ export default function ChallanDashboard() {
                 total={calculateTotal()}
                 suggestions={itemSuggestions}
                 isLastPage={isLastPage}
+                isReadOnly={isReadOnly}
               />
               <ChallanFooter />
             </ChallanForm>
@@ -111,17 +113,25 @@ export default function ChallanDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start print:block print:gap-0">
           <section className="relative overflow-x-auto pb-4 print:pb-0 print:overflow-visible">
             <div className="min-w-[800px] md:min-w-0 print:min-w-0">
-              {/* Copy 1: White (Original) */}
-              {renderChallanPages("copy-1")}
-
-              {/* Copy 2: Pink/Purple (Hidden on screen, visible on print) */}
-              <div className="hidden print:block">
-                {renderChallanPages("copy-2")}
+              
+              {/* INTERACTIVE SCREEN VERSION (Hidden on print) */}
+              <div className="print:hidden">
+                {renderChallanPages("screen-copy", false)}
               </div>
 
-              {/* Copy 3: Yellow/Green (Hidden on screen, visible on print) */}
+              {/* Copy 1: White (Print only) */}
               <div className="hidden print:block">
-                {renderChallanPages("copy-3")}
+                {renderChallanPages("copy-1", true)}
+              </div>
+
+              {/* Copy 2: Pink/Purple (Print only) */}
+              <div className="hidden print:block">
+                {renderChallanPages("copy-2", true)}
+              </div>
+
+              {/* Copy 3: Yellow/Green (Print only) */}
+              <div className="hidden print:block">
+                {renderChallanPages("copy-3", true)}
               </div>
             </div>
           </section>
