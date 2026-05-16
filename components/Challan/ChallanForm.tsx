@@ -83,7 +83,7 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
         <div className="flex-1 flex flex-col">
           {/* Metadata Grid */}
           <div className="grid grid-cols-[1fr_auto] gap-x-12 gap-y-3 mb-6 px-2 text-sm">
-            <div className="space-y-3">
+            <div className="space-y-3 min-w-0">
               <div className="flex items-baseline gap-1">
                 <span className="font-bold whitespace-nowrap">Name:</span>
                 <div className="flex-1 border-b border-dotted border-black min-h-[20px] flex items-end">
