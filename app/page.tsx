@@ -45,11 +45,38 @@ export default function ChallanDashboard() {
       .filter(d => d && d.trim().length > 0)
   ));
 
-  // Pagination logic: Chunk items into groups of 20
-  const ITEMS_PER_PAGE = 20;
+  // Helper to estimate the number of row units a description takes up
+  const getItemHeightUnits = (description: string): number => {
+    if (!description) return 1;
+    const lines = description.split('\n');
+    let totalUnits = 0;
+    for (const line of lines) {
+      // 50 characters is a safe limit for one line in A4 description column
+      totalUnits += Math.max(1, Math.ceil(line.length / 50));
+    }
+    return Math.max(1, totalUnits);
+  };
+
+  // Dynamic pagination logic:
+  const MAX_HEIGHT_UNITS = 20;
   const chunkedItems: typeof challan.items[] = [];
-  for (let i = 0; i < challan.items.length; i += ITEMS_PER_PAGE) {
-    chunkedItems.push(challan.items.slice(i, i + ITEMS_PER_PAGE));
+  let currentChunk: typeof challan.items = [];
+  let currentUnits = 0;
+
+  for (const item of challan.items) {
+    const itemUnits = getItemHeightUnits(item.description);
+    
+    if (currentUnits + itemUnits > MAX_HEIGHT_UNITS && currentChunk.length > 0) {
+      chunkedItems.push(currentChunk);
+      currentChunk = [item];
+      currentUnits = itemUnits;
+    } else {
+      currentChunk.push(item);
+      currentUnits += itemUnits;
+    }
+  }
+  if (currentChunk.length > 0) {
+    chunkedItems.push(currentChunk);
   }
   if (chunkedItems.length === 0) chunkedItems.push([]);
 
