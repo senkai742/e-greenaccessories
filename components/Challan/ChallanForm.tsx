@@ -48,8 +48,8 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
             {/* E-GREEN Branding Logo Image */}
             <img src="/logo.png" alt="E-GREEN Logo" className="h-16 w-auto" />
             <div className="border-l-2 border-black pl-4">
-              <h1 className="text-4xl font-bold tracking-tight text-black leading-tight">E-Green Accessories</h1>
-              <p className="text-sm font-semibold">(One Stop Services For Garments Accessories)</p>
+              <h1 className="text-5xl font-bold tracking-[3px] text-black leading-snug font-serif">E-Green Accessories</h1>
+              <p className="text-sm font-semibold tracking-wide">(One Stop Services For Garments Accessories)</p>
             </div>
           </div>
         </div>

@@ -40,14 +40,18 @@ export function ChallanTable({ items, onUpdateItem, onAddItem, onRemoveItem, tot
               <td className="border border-black px-1 py-1 text-center font-bold">{item.slNo}</td>
               <td className="border border-black px-0 py-0 relative">
                 {isReadOnly ? (
-                  <div className="w-full px-2 py-0 h-full leading-[23px]">{item.description}</div>
+                  <div className="w-full px-2 py-0 h-full leading-[23px] whitespace-pre-wrap break-words">{item.description}</div>
                 ) : (
-                  <input
-                    type="text"
+                  <textarea
                     value={item.description}
-                    list="description-suggestions"
                     onChange={(e) => onUpdateItem(item.id, "description", e.target.value)}
-                    className="w-full px-2 py-0 bg-transparent outline-none h-full"
+                    className="w-full px-2 py-[2px] bg-transparent outline-none min-h-[23px] resize-none overflow-hidden leading-[19px] whitespace-pre-wrap break-words"
+                    rows={1}
+                    onInput={(e) => {
+                      const target = e.target as HTMLTextAreaElement;
+                      target.style.height = '23px';
+                      target.style.height = `${target.scrollHeight}px`;
+                    }}
                   />
                 )}
                 {/* Vertical line separator inside Description if needed to match image exactly */}
