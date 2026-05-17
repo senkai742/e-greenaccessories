@@ -26,7 +26,23 @@ body {
   font-family: var(--font-sans);
 }
 
+.print-only-copy {
+  display: block !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 @media print {
+  .print-only-copy {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
   @page {
     margin: 0; /* Remove browser default margins */
     size: A4;
@@ -89,8 +105,8 @@ body {
     padding: 8mm !important;
     margin: 0 !important;
     width: 210mm !important;
-    height: 296.5mm !important;
-    max-height: 296.5mm !important;
+    height: 277mm !important; /* Extremely safe height for both US Letter (279.4mm) and A4 (297mm) to prevent 2nd page spill */
+    max-height: 277mm !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
