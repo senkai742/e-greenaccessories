@@ -1,24 +1,25 @@
 "use client";
 
 import React from "react";
-import { Printer, Save } from "lucide-react";
+import { Printer, Save, Download } from "lucide-react";
 import { ChallanData } from "../../types/challan";
 
 interface ChallanFormProps {
   data: ChallanData;
   updateField: (field: keyof ChallanData, value: string | number) => void;
   onPrint: () => void;
+  onDownloadPDF?: () => void;
   onSave: () => void;
   children?: React.ReactNode;
   isReadOnly?: boolean;
 }
 
-export function ChallanForm({ data, updateField, onPrint, onSave, children, isReadOnly = false }: ChallanFormProps) {
+export function ChallanForm({ data, updateField, onPrint, onDownloadPDF, onSave, children, isReadOnly = false }: ChallanFormProps) {
   return (
     <>
       {/* SCREEN UI ONLY: Completely isolated from the printable container */}
       <div className="block print:hidden no-print bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 max-w-[210mm] mx-auto">
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             onClick={onPrint}
             className="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all shadow-md active:scale-95"
@@ -26,6 +27,15 @@ export function ChallanForm({ data, updateField, onPrint, onSave, children, isRe
             <Printer size={18} />
             Print Challan
           </button>
+          {onDownloadPDF && (
+            <button
+              onClick={onDownloadPDF}
+              className="flex items-center gap-2 px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-md active:scale-95"
+            >
+              <Download size={18} />
+              Download PDF
+            </button>
+          )}
           <button
             onClick={onSave}
             className="flex items-center gap-2 px-6 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm active:scale-95"

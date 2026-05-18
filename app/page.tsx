@@ -23,9 +23,82 @@ export default function ChallanDashboard() {
     importHistory
   } = useChallan();
 
+  const handleDownloadPDF = async () => {
+    saveChallan();
+    
+    const loader = document.createElement("div");
+    loader.innerHTML = `
+      <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-family: sans-serif; pointer-events: all;">
+        <div style="border: 4px solid #f3f3f3; border-top: 4px solid #10b981; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>
+        <p style="margin-top: 20px; font-weight: bold; font-size: 16px;">Generating Pixel-Perfect PDF...</p>
+        <p style="margin-top: 6px; font-size: 12px; color: #a1a1aa;">Rendering copies client-side for consistent mobile output.</p>
+        <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+      </div>
+    `;
+    document.body.appendChild(loader);
+
+    try {
+      const { default: jsPDF } = await import("jspdf");
+      const { default: html2canvas } = await import("html2canvas");
+
+      // Query the print container copies
+      const containers = Array.from(document.querySelectorAll(".print-only-copy .challan-container"));
+      
+      if (containers.length === 0) {
+        throw new Error("No print pages found.");
+      }
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+      });
+
+      for (let idx = 0; idx < containers.length; idx++) {
+        const container = containers[idx] as HTMLElement;
+        const parent = container.parentElement as HTMLElement;
+
+        // Apply temporary class to position copy properly for capturing
+        parent.classList.add("html2canvas-capture");
+
+        // Wait a frame for browser to render
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
+        const canvas = await html2canvas(container, {
+          scale: 2.2, // Extremely sharp resolution
+          useCORS: true,
+          logging: false,
+          backgroundColor: "#ffffff",
+        });
+
+        parent.classList.remove("html2canvas-capture");
+
+        const imgData = canvas.toDataURL("image/jpeg", 0.95);
+        
+        if (idx > 0) {
+          pdf.addPage();
+        }
+        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+      }
+
+      pdf.save(`challan_${challan.challanNo || "draft"}.pdf`);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate PDF. Falling back to native browser printing...");
+      window.print();
+    } finally {
+      document.body.removeChild(loader);
+    }
+  };
+
   const handlePrint = () => {
     saveChallan();
-    window.print();
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      handleDownloadPDF();
+    } else {
+      window.print();
+    }
   };
 
   const handleSave = () => {
@@ -90,6 +163,7 @@ export default function ChallanDashboard() {
               data={challan}
               updateField={updateField}
               onPrint={handlePrint}
+              onDownloadPDF={handleDownloadPDF}
               onSave={handleSave}
               isReadOnly={isReadOnly}
             >
