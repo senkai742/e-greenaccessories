@@ -6,6 +6,8 @@ import { ChallanForm } from "../components/Challan/ChallanForm";
 import { ChallanTable } from "../components/Challan/ChallanTable";
 import { ChallanFooter } from "../components/Challan/ChallanFooter";
 import { HistoryList } from "../components/Challan/HistoryList";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function ChallanDashboard() {
   const {
@@ -38,9 +40,6 @@ export default function ChallanDashboard() {
     document.body.appendChild(loader);
 
     try {
-      const { default: jsPDF } = await import("jspdf");
-      const { default: html2canvas } = await import("html2canvas");
-
       // Query the print container copies
       const containers = Array.from(document.querySelectorAll(".print-only-copy .challan-container"));
       
@@ -84,7 +83,8 @@ export default function ChallanDashboard() {
       pdf.save(`challan_${challan.challanNo || "draft"}.pdf`);
     } catch (err) {
       console.error(err);
-      alert("Failed to generate PDF. Falling back to native browser printing...");
+      const errMsg = err instanceof Error ? err.message : String(err);
+      alert("Failed to generate PDF: " + errMsg + "\nFalling back to native browser printing...");
       window.print();
     } finally {
       document.body.removeChild(loader);
